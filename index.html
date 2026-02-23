@@ -1,192 +1,761 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="scroll-smooth">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Segunda Igreja Batista de Nova Friburgo</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Segunda Igreja Batista de Nova Friburgo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet" />
 
-    <style>
-      body { font-family: 'Lato', sans-serif; background-color: #fdfcf0; color: #19395f; -webkit-font-smoothing: antialiased; font-size: 18px; }
-      h1, h2, h3 { font-family: 'Playfair Display', serif; }
-      section { scroll-margin-top: 140px; }
-      
-      /* Menu Mobile Robusto */
-      .mobile-btn {
-          background-color: #122a46; color: white; border-radius: 8px;
-          display: flex; align-items: center; justify-content: center;
-          padding: 14px 6px; text-decoration: none; font-size: 13px; 
-          font-weight: 900; text-transform: uppercase; text-align: center;
-          border: 1px solid rgba(255,255,255,0.1);
-      }
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-      .big-social-btn {
-          display: flex; align-items: center; gap: 1rem;
-          padding: 1.5rem; border-radius: 0.8rem; border: 3px solid #19395f;
-          text-decoration: none; width: 100%;
-      }
+    :root {
+      --ink:         #1c1410;
+      --brown:       #3d2b1f;
+      --brown-mid:   #6b4226;
+      --amber:       #c8892a;
+      --amber-lt:    #e6b050;
+      --parchment:   #f5f0e8;
+      --parchment-dk:#ede5d6;
+      --stone:       #d6ccbc;
+      --white:       #fdfaf5;
+      --muted:       #7a6a5a;
+    }
 
-      .calendar-container {
-          position: relative; padding-bottom: 120%; height: 0; overflow: hidden;
-      }
-      @media (min-width: 768px) {
-          .calendar-container { padding-bottom: 600px; height: 600px; }
-      }
-      .calendar-container iframe {
-          position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--parchment);
+      color: var(--ink);
+      line-height: 1.7;
+    }
 
-      /* Impede quebra do CNPJ */
-      .no-break { white-space: nowrap; font-variant-numeric: tabular-nums; }
-    </style>
+    /* NAV */
+    #nav {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--brown);
+      border-bottom: 3px solid var(--amber);
+    }
+    .nav-wrap {
+      max-width: 1080px; margin: 0 auto;
+      display: flex; align-items: stretch; height: 62px;
+    }
+    .nav-brand {
+      display: flex; align-items: center; gap: 12px;
+      padding: 0 24px; text-decoration: none;
+      border-right: 1px solid rgba(255,255,255,0.1);
+      flex-shrink: 0;
+    }
+    .nav-logo {
+      width: 38px; height: 38px; border-radius: 50%;
+      border: 2px solid var(--amber); object-fit: cover; background: #fff;
+    }
+    .nav-brand-text { color: #fff; line-height: 1.2; }
+    .nav-brand-text b {
+      display: block; font-family: 'EB Garamond', serif;
+      font-size: 1rem; font-weight: 600;
+    }
+    .nav-brand-text small {
+      font-size: 0.6rem; opacity: 0.5;
+      letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex; align-items: center;
+      padding: 0 16px; gap: 0; margin-left: auto;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,0.65); text-decoration: none;
+      font-size: 0.67rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0 12px; height: 62px;
+      display: flex; align-items: center;
+      border-bottom: 3px solid transparent; margin-bottom: -3px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-links a:hover { color: var(--amber-lt); border-bottom-color: var(--amber-lt); }
+    .ham {
+      display: none; background: none; border: none;
+      cursor: pointer; padding: 0 20px; margin-left: auto;
+      flex-direction: column; justify-content: center; gap: 5px;
+    }
+    .ham span { display: block; width: 22px; height: 2px; background: #fff; }
+    #mob-menu {
+      display: none; background: var(--brown);
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    #mob-menu.open { display: block; }
+    #mob-menu a {
+      display: block; padding: 14px 24px;
+      color: rgba(255,255,255,0.75); text-decoration: none;
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .ham { display: flex; }
+    }
+
+    /* HERO */
+    .hero {
+      background: var(--brown);
+      padding: 80px 24px 72px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: repeating-linear-gradient(
+        0deg, transparent, transparent 60px,
+        rgba(255,255,255,0.012) 60px, rgba(255,255,255,0.012) 61px
+      ), repeating-linear-gradient(
+        90deg, transparent, transparent 60px,
+        rgba(255,255,255,0.012) 60px, rgba(255,255,255,0.012) 61px
+      );
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+    .hero-ornament {
+      font-family: 'EB Garamond', serif;
+      font-size: 2rem; color: var(--amber); opacity: 0.7;
+      margin-bottom: 16px; display: block;
+    }
+    .hero-eyebrow {
+      font-size: 0.63rem; font-weight: 700;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--amber-lt); margin-bottom: 18px; display: block;
+    }
+    .hero h1 {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(2.2rem, 6vw, 4.2rem);
+      font-weight: 500; color: #fff; line-height: 1.08;
+      margin-bottom: 14px;
+    }
+    .hero-rule {
+      width: 56px; height: 2px; background: var(--amber);
+      margin: 20px auto;
+    }
+    .hero-sub {
+      font-size: 0.9rem; color: rgba(255,255,255,0.5);
+      letter-spacing: 0.1em; font-style: italic;
+      font-family: 'EB Garamond', serif;
+    }
+
+    /* VIDEO */
+    .video-section { background: var(--ink); }
+    .video-wrap { max-width: 1080px; margin: 0 auto; aspect-ratio: 16/9; }
+    .video-wrap iframe { width: 100%; height: 100%; display: block; border: 0; }
+
+    /* SECTION BASE */
+    .section { padding: 72px 24px; }
+    .section-inner { max-width: 1080px; margin: 0 auto; }
+    .s-eye {
+      font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 10px; display: block;
+    }
+    .s-title {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 500; line-height: 1.15; color: var(--brown);
+    }
+    .s-rule { width: 40px; height: 2px; background: var(--amber); margin: 14px 0 26px; }
+
+    /* BÍBLIA */
+    .biblia {
+      background: var(--brown);
+      text-align: center; padding: 80px 24px;
+      position: relative; overflow: hidden;
+    }
+    .biblia::after {
+      content: '✝';
+      position: absolute; right: -40px; top: 50%; transform: translateY(-50%);
+      font-size: 20rem; color: rgba(255,255,255,0.025); pointer-events: none;
+    }
+    .biblia-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+    .biblia-eye {
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--amber); display: block; margin-bottom: 24px;
+    }
+    .biblia-verse {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(1.3rem, 3vw, 2.1rem);
+      font-style: italic; color: var(--amber-lt);
+      line-height: 1.5; margin-bottom: 12px;
+    }
+    .biblia-ref {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.35); margin-bottom: 32px; display: block;
+    }
+    .biblia-text {
+      font-size: 0.98rem; color: rgba(255,255,255,0.6);
+      line-height: 1.85;
+    }
+
+    /* HISTÓRIA */
+    #historia { background: var(--white); }
+    .historia-grid {
+      display: grid; grid-template-columns: 1fr 300px; gap: 60px; align-items: start;
+    }
+    .historia-text p {
+      font-size: 1rem; color: var(--muted);
+      line-height: 1.9; margin-bottom: 18px; font-weight: 300;
+    }
+    .historia-text p:last-child { margin-bottom: 0; }
+    .historia-tl {
+      background: var(--parchment);
+      border: 1px solid var(--stone);
+      border-top: 4px solid var(--amber);
+      border-radius: 3px; padding: 24px 20px;
+      position: sticky; top: 80px;
+    }
+    .tl-head {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 18px;
+    }
+    .tl-item {
+      display: flex; gap: 14px; padding: 12px 0;
+      border-bottom: 1px solid var(--stone);
+    }
+    .tl-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .tl-yr {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.95rem; font-weight: 700;
+      color: var(--amber); min-width: 42px; line-height: 1.4;
+    }
+    .tl-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+
+    @media (max-width: 760px) {
+      .historia-grid { grid-template-columns: 1fr; gap: 32px; }
+      .historia-tl { position: static; }
+    }
+
+    /* PASTOR */
+    #pastor { background: var(--parchment-dk); }
+    .pastor-grid {
+      display: grid; grid-template-columns: 240px 1fr; gap: 56px; align-items: start;
+    }
+    .pastor-photo {
+      width: 100%; aspect-ratio: 3/4; object-fit: cover;
+      border-radius: 3px;
+      box-shadow: 6px 6px 0 var(--amber), 10px 10px 0 rgba(200,137,42,0.18);
+    }
+    .pastor-tag {
+      display: inline-block; background: var(--amber); color: var(--brown);
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 5px 12px; margin-bottom: 14px;
+    }
+    .pastor-name {
+      font-family: 'EB Garamond', serif;
+      font-size: 2rem; font-weight: 500; color: var(--brown);
+      line-height: 1.2; margin-bottom: 6px;
+    }
+    .pastor-role {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 22px;
+    }
+    .pastor-bio p {
+      font-size: 0.97rem; color: var(--muted); line-height: 1.85;
+      font-weight: 300; margin-bottom: 16px;
+    }
+    .pastor-bio p:last-child { margin-bottom: 0; }
+
+    @media (max-width: 680px) {
+      .pastor-grid { grid-template-columns: 1fr; }
+      .pastor-photo { aspect-ratio: 1; max-width: 210px; }
+    }
+
+    /* AGENDA */
+    #agenda { background: var(--white); }
+    .agenda-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 18px; margin-top: 8px;
+    }
+    .agenda-card {
+      background: var(--parchment);
+      border: 1px solid var(--stone);
+      border-top: 4px solid var(--amber);
+      border-radius: 3px; padding: 24px 20px;
+    }
+    .agenda-dia {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 16px;
+    }
+    .agenda-item {
+      display: flex; gap: 14px; align-items: baseline;
+      padding: 9px 0; border-bottom: 1px solid var(--stone);
+    }
+    .agenda-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .agenda-h {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.1rem; font-weight: 700; color: var(--brown); min-width: 36px;
+    }
+    .agenda-n { font-size: 0.87rem; color: var(--muted); line-height: 1.4; }
+
+    /* OFERTAS */
+    #ofertas {
+      background: linear-gradient(135deg, var(--brown) 0%, #261710 100%);
+      padding: 80px 24px; text-align: center;
+    }
+    .of-eye {
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--amber); display: block; margin-bottom: 10px;
+    }
+    .of-title {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 500; color: var(--amber-lt);
+    }
+    .of-rule { width: 40px; height: 2px; background: var(--amber); margin: 14px auto 20px; }
+    .of-verse {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.15rem; font-style: italic;
+      color: rgba(255,255,255,0.45); margin-bottom: 36px;
+    }
+    .of-box {
+      display: inline-flex; flex-direction: column; align-items: center;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(200,137,42,0.3);
+      border-radius: 4px; padding: 36px 52px; gap: 8px;
+    }
+    .of-label {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--amber);
+    }
+    .of-cnpj {
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(1.4rem, 4vw, 2.2rem); font-weight: 600;
+      color: #fff; letter-spacing: 0.05em;
+    }
+    .of-bank { font-size: 0.68rem; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; }
+    .of-copy {
+      margin-top: 18px; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.67rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--amber); border: 1px solid var(--amber);
+      padding: 10px 22px; border-radius: 2px; background: transparent;
+      transition: background 0.2s, color 0.2s;
+    }
+    .of-copy:hover { background: var(--amber); color: var(--brown); }
+
+    /* REDES */
+    #social { background: var(--parchment-dk); }
+    .soc-groups { display: flex; flex-direction: column; gap: 34px; margin-top: 8px; }
+    .soc-group-label {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 12px;
+      padding-bottom: 8px; border-bottom: 1px solid var(--stone);
+    }
+    .soc-list { display: flex; flex-direction: column; gap: 8px; }
+    .soc-link {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 18px;
+      background: var(--white); border: 1px solid var(--stone);
+      border-left: 4px solid var(--amber);
+      border-radius: 3px; text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .soc-link:hover { transform: translateX(5px); box-shadow: 0 4px 16px rgba(61,43,31,0.08); }
+    .soc-link.yt  { border-left-color: #c0392b; }
+    .soc-link.fb  { border-left-color: #2d5fa8; }
+    .soc-link.wa  { border-left-color: #25d366; }
+    .soc-icon { width: 22px; height: 22px; flex-shrink: 0; }
+    .soc-info { flex: 1; }
+    .soc-name { font-size: 0.9rem; font-weight: 600; color: var(--brown); display: block; line-height: 1.3; }
+    .soc-handle { font-size: 0.72rem; color: var(--muted); }
+    .soc-arr { color: var(--stone); }
+
+    /* ANIVERSARIANTES */
+    #aniversariantes { background: var(--white); }
+    .cal-wrap { margin-top: 24px; border: 1px solid var(--stone); border-radius: 4px; overflow: hidden; }
+    .cal-wrap iframe { width: 100%; height: 480px; border: 0; display: block; }
+
+    /* FOOTER */
+    footer { background: var(--ink); border-top: 4px solid var(--amber); padding: 52px 24px 36px; }
+    .footer-inner {
+      max-width: 1080px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px;
+    }
+    .ft-church {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.15rem; font-weight: 500; color: rgba(255,255,255,0.85);
+      margin-bottom: 10px; line-height: 1.3;
+    }
+    .ft-label {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 12px;
+    }
+    .ft-text { font-size: 0.85rem; color: rgba(255,255,255,0.4); line-height: 1.8; }
+    .ft-text a { color: rgba(255,255,255,0.4); text-decoration: none; }
+    .ft-text a:hover { color: var(--amber-lt); }
+    .footer-bottom {
+      max-width: 1080px; margin: 32px auto 0;
+      padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; justify-content: space-between;
+      font-size: 0.68rem; color: rgba(255,255,255,0.18);
+      flex-wrap: wrap; gap: 8px;
+    }
+    @media (max-width: 680px) {
+      .footer-inner { grid-template-columns: 1fr; gap: 24px; }
+      .footer-bottom { flex-direction: column; }
+    }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+  </style>
 </head>
 <body>
 
-    <nav class="bg-[#19395f] text-white py-4 px-4 shadow-lg sticky top-0 z-50">
-        <div class="container mx-auto flex justify-between items-center">
-          <div class="flex items-center gap-3">
-             <img src="logo.png" class="w-16 h-16 rounded-full border-2 border-[#c5a059] object-cover" onerror="this.src='https://via.placeholder.com/150'"/>
-             <div class="leading-tight">
-               <span class="text-lg md:text-2xl font-serif font-bold block">Segunda Igreja Batista</span>
-               <span class="text-xs md:text-base opacity-90 block">de Nova Friburgo</span>
-             </div>
-          </div>
-  
-          <div class="hidden xl:flex items-center gap-6 text-base font-bold uppercase tracking-wider">
-            <a href="#biblia" class="hover:text-[#c5a059]">Bíblia</a>
-            <a href="#historia" class="hover:text-[#c5a059]">História</a>
-            <a href="#pastor" class="hover:text-[#c5a059]">Pastor</a>
-            <a href="#agenda" class="hover:text-[#c5a059]">Agenda</a>
-            <a href="#ofertas" class="hover:text-[#c5a059]">Ofertas</a>
-            <a href="#aniversariantes" class="hover:text-[#c5a059]">Aniversariantes</a>
-            <a href="https://wa.me/5522981633108" target="_blank" class="bg-[#25D366] text-white px-5 py-3 rounded-full flex items-center gap-2 text-lg">
-                <i data-lucide="message-circle"></i> Contato
-            </a>
-          </div>
-        </div>
-        
-        <div class="xl:hidden mt-4 pt-4 border-t border-white/20 grid grid-cols-2 gap-3">
-            <a href="#biblia" class="mobile-btn">📖 A Bíblia</a>
-            <a href="#historia" class="mobile-btn">📜 História</a>
-            <a href="#pastor" class="mobile-btn">🤝 Pastor</a>
-            <a href="#ministerios" class="mobile-btn">🙌 Ministérios</a>
-            <a href="#agenda" class="mobile-btn">📅 Agenda</a>
-            <a href="#ofertas" class="mobile-btn">💎 Ofertas</a>
-            <a href="#aniversariantes" class="mobile-btn col-span-2 bg-[#c5a059] text-[#19395f]">🎂 Aniversariantes</a>
-        </div>
-    </nav>
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-wrap">
+    <a href="#" class="nav-brand">
+      <img src="logo.png" class="nav-logo" onerror="this.src='Logo.png'" alt="SIBNF" />
+      <div class="nav-brand-text">
+        <b>Segunda Igreja Batista</b>
+        <small>Nova Friburgo &middot; Est. 1947</small>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#biblia">A B&iacute;blia</a>
+      <a href="#historia">Hist&oacute;ria</a>
+      <a href="#pastor">Pastor</a>
+      <a href="#agenda">Agenda</a>
+      <a href="#ofertas">Ofertas</a>
+      <a href="#social">Redes</a>
+    </div>
+    <button class="ham" id="hamBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div id="mob-menu">
+    <a href="#biblia">A B&iacute;blia Sagrada</a>
+    <a href="#historia">Nossa Hist&oacute;ria</a>
+    <a href="#pastor">O Pastor</a>
+    <a href="#agenda">Agenda Semanal</a>
+    <a href="#ofertas">D&iacute;zimos &amp; Ofertas</a>
+    <a href="#social">Redes Sociais</a>
+  </div>
+</nav>
 
-    <main class="max-w-5xl mx-auto bg-white shadow-2xl min-h-screen border-t-8 border-[#19395f]">
-        
-        <div class="w-full aspect-video bg-black">
-            <iframe class="w-full h-full" src='https://www.youtube.com/embed/0FiADaWB7G8' frameBorder='0' allowFullScreen></iframe>
-        </div>
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <span class="hero-ornament">&#10013;</span>
+    <span class="hero-eyebrow">Nova Friburgo &middot; RJ</span>
+    <h1>Segunda Igreja<br />Batista de<br />Nova Friburgo</h1>
+    <div class="hero-rule"></div>
+    <p class="hero-sub">Desde 1947 servindo ao Senhor</p>
+  </div>
+</header>
 
-        <div class="px-6 py-12 md:px-20 space-y-24">
+<!-- VIDEO -->
+<div class="video-section">
+  <div class="video-wrap">
+    <iframe src="https://www.youtube.com/embed/0FiADaWB7G8" allowfullscreen allow="encrypted-media"></iframe>
+  </div>
+</div>
 
-            <section id="biblia" class="text-center border-b-2 border-[#19395f]/10 pb-16">
-                <i data-lucide="book-open" class="w-16 h-16 text-[#c5a059] mx-auto mb-6"></i>
-                <h2 class="text-4xl md:text-5xl font-bold mb-8 text-[#19395f]">A Bíblia Sagrada</h2>
-                <p class="text-2xl italic text-gray-700 max-w-2xl mx-auto mb-8">"Lâmpada para os meus pés é a tua palavra e luz para o meu caminho." (Salmos 119:105)</p>
-                <p class="text-xl md:text-2xl text-gray-600 leading-relaxed text-justify md:text-center">Cremos que a Bíblia é a Palavra de Deus inspirada, inerrante e suficiente. Ela é a nossa única regra de fé e prática.</p>
-            </section>
+<!-- BIBLIA -->
+<section class="biblia" id="biblia">
+  <div class="biblia-inner reveal">
+    <span class="biblia-eye">A B&iacute;blia Sagrada</span>
+    <p class="biblia-verse">&ldquo;L&acirc;mpada para os meus p&eacute;s &eacute; a tua palavra e luz para o meu caminho.&rdquo;</p>
+    <span class="biblia-ref">Salmos 119:105</span>
+    <p class="biblia-text">Cremos que a B&iacute;blia &eacute; a Palavra de Deus inspirada, inerrante e suficiente. Ela &eacute; a nossa &uacute;nica regra de f&eacute; e pr&aacute;tica.</p>
+  </div>
+</section>
 
-            <section id="historia">
-                <h2 class="text-4xl md:text-5xl font-bold mb-10 text-[#19395f] border-l-[12px] border-[#c5a059] pl-6">Nossa História</h2>
-                <div class="space-y-8 text-xl md:text-2xl text-gray-800 leading-relaxed text-justify">
-                    <p>Organizada em 27 de março de 1947 como Igreja Batista Ebenezer, a SIBNF iniciou sua trajetória em uma sede alugada no centro de Nova Friburgo. Sob a liderança inicial do missionário Walter Mac Nealy e, posteriormente, do pastor Isidoro Pires dos Santos, a igreja expandiu sua atuação e fundou a Escola Batista.</p>
-                    <p>Em 1964, assumiu o pastor João José Soares Filho, cujo ministério de 40 anos foi marcado pela construção do atual templo em Olaria, inaugurado em 1993. Após seu falecimento em 2004, a igreja foi liderada pelo pastor Dejalmir da Cunha Waldhelm (2005-2010).</p>
-                    <p>Atualmente, sob a liderança do pastor Nilson Gomes Godoy, a igreja consolidou projetos de integração e reafirma seu compromisso com o evangelismo e a ação social em Nova Friburgo.</p>
-                </div>
-            </section>
+<!-- HISTORIA -->
+<section class="section" id="historia">
+  <div class="section-inner reveal">
+    <span class="s-eye">Nossa Hist&oacute;ria</span>
+    <h2 class="s-title">Quase oito d&eacute;cadas de f&eacute;</h2>
+    <div class="s-rule"></div>
+    <div class="historia-grid">
+      <div class="historia-text">
+        <p>Organizada em 27 de mar&ccedil;o de 1947 como Igreja Batista Ebenezer, a SIBNF iniciou sua trajet&oacute;ria em uma sede alugada no centro de Nova Friburgo. Sob a lideran&ccedil;a inicial do mission&aacute;rio Walter Mac Nealy e, posteriormente, do pastor Isidoro Pires dos Santos, a igreja expandiu sua atua&ccedil;&atilde;o e fundou a Escola Batista.</p>
+        <p>Em 1964, assumiu o pastor Jo&atilde;o Jos&eacute; Soares Filho, cujo minist&eacute;rio de 40 anos foi marcado pela constru&ccedil;&atilde;o do atual templo em Olaria, inaugurado em 1993. Ap&oacute;s seu falecimento em 2004, a igreja foi liderada pelo pastor Dejalmir da Cunha Waldhelm (2005&ndash;2010).</p>
+        <p>Atualmente, sob a lideran&ccedil;a do pastor Nilson Gomes Godoy, a igreja consolidou projetos de integra&ccedil;&atilde;o e reafirma seu compromisso com o evangelismo e a a&ccedil;&atilde;o social em Nova Friburgo.</p>
+      </div>
+      <aside class="historia-tl">
+        <div class="tl-head">Linha do Tempo</div>
+        <div class="tl-item">
+          <div class="tl-yr">1947</div>
+          <div class="tl-desc">Funda&ccedil;&atilde;o como Igreja Batista Ebenezer. Mission&aacute;rio Walter Mac Nealy.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-yr">1964</div>
+          <div class="tl-desc">Pr. Jo&atilde;o Jos&eacute; Soares Filho assume a lideran&ccedil;a.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-yr">1993</div>
+          <div class="tl-desc">Inaugura&ccedil;&atilde;o do templo atual em Olaria.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-yr">2004</div>
+          <div class="tl-desc">Falecimento do Pr. Jo&atilde;o Jos&eacute; Soares Filho.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-yr">2005</div>
+          <div class="tl-desc">Pr. Dejalmir Waldhelm assume (at&eacute; 2010).</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-yr">Atual</div>
+          <div class="tl-desc">Pr. Nilson Gomes Godoy &mdash; evangelismo e a&ccedil;&atilde;o social.</div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
 
-            <section id="pastor" class="bg-[#fdfcf0] p-8 md:p-14 rounded-3xl border-2 border-[#c5a059] shadow-lg">
-                <div class="flex flex-col gap-12">
-                    <div class="flex flex-col md:flex-row gap-12 items-center md:items-start w-full">
-                        <img src="pastor.jpg" class="w-64 h-64 md:w-80 md:h-80 object-cover rounded-2xl border-4 border-[#19395f] shadow-2xl" onerror="this.src='https://via.placeholder.com/400'"/>
-                        <div class="flex-1 text-center md:text-left">
-                            <h2 class="text-4xl md:text-5xl font-bold text-[#19395f] mb-4">Pr. Nilson Gomes Godoy</h2>
-                            <span class="text-[#c5a059] font-black text-xl uppercase mb-8 block tracking-widest">Pastor Presidente</span>
-                            <div class="text-gray-700 text-xl md:text-2xl text-justify space-y-8 leading-relaxed">
-                                <p>Bacharel em Teologia pelo Seminário Teológico Batista do Sul do Brasil e formado em Administração pela UFF, o pastor Nilson Godoy possui uma vasta trajetória ministerial, tendo liderado instituições e igrejas em todo o estado.</p>
-                                <p>Casado há 26 anos com Lilian Matilde e pai de três filhos, ele foca sua visão na plantação de novas frentes de pregação e no suporte sistemático às famílias da nossa comunidade.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+<!-- PASTOR -->
+<section class="section" id="pastor">
+  <div class="section-inner reveal">
+    <span class="s-eye">Lideran&ccedil;a</span>
+    <h2 class="s-title">O Pastor</h2>
+    <div class="s-rule"></div>
+    <div class="pastor-grid">
+      <div>
+        <img src="pastor.jpg" class="pastor-photo" onerror="this.src='Pastor.jpg'" alt="Pr. Nilson Gomes Godoy" />
+      </div>
+      <div>
+        <span class="pastor-tag">Pastor Presidente</span>
+        <h3 class="pastor-name">Pr. Nilson Gomes Godoy</h3>
+        <p class="pastor-role">Segunda Igreja Batista de Nova Friburgo</p>
+        <div class="pastor-bio">
+          <p>Bacharel em Teologia pelo Semin&aacute;rio Teol&oacute;gico Batista do Sul do Brasil e formado em Administra&ccedil;&atilde;o pela UFF, o pastor Nilson Godoy possui uma vasta trajet&oacute;ria ministerial, tendo liderado institui&ccedil;&otilde;es e igrejas em todo o estado do Rio de Janeiro.</p>
+          <p>Casado h&aacute; 26 anos com Lilian Matilde e pai de tr&ecirc;s filhos, ele foca sua vis&atilde;o na planta&ccedil;&atilde;o de novas frentes de prega&ccedil;&atilde;o e no suporte sistem&aacute;tico &agrave;s fam&iacute;lias da nossa comunidade.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-            <section id="agenda">
-                <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center text-[#19395f]">Agenda Semanal</h2>
-                <div class="space-y-8 max-w-3xl mx-auto">
-                    <div class="flex flex-col md:flex-row items-start md:items-center bg-[#19395f] text-white p-8 rounded-2xl shadow-xl border-l-[16px] border-[#c5a059]">
-                        <div class="w-full md:w-1/3 font-black text-2xl md:text-3xl uppercase mb-2 md:mb-0">Domingo</div>
-                        <div class="text-xl md:text-2xl font-bold text-[#c5a059]">09h, 10h e 19h</div>
-                    </div>
-                    <div class="flex flex-col md:flex-row items-start md:items-center bg-white border-4 border-[#19395f] p-8 rounded-2xl shadow-md">
-                        <div class="w-full md:w-1/3 font-black text-2xl md:text-3xl uppercase mb-2 md:mb-0 text-[#19395f]">Quarta</div>
-                        <div class="text-xl md:text-2xl font-black">19h - Oração</div>
-                    </div>
-                    <div class="flex flex-col md:flex-row items-start md:items-center bg-white border-4 border-[#19395f] p-8 rounded-2xl shadow-md">
-                        <div class="w-full md:w-1/3 font-black text-2xl md:text-3xl uppercase mb-2 md:mb-0 text-[#19395f]">Sexta</div>
-                        <div class="text-xl md:text-2xl font-black text-red-800">19h - Embaixadores e Mensageiras</div>
-                    </div>
-                </div>
-            </section>
+<!-- AGENDA -->
+<section class="section" id="agenda">
+  <div class="section-inner reveal">
+    <span class="s-eye">Programa&ccedil;&atilde;o</span>
+    <h2 class="s-title">Agenda Semanal</h2>
+    <div class="s-rule"></div>
+    <p style="font-size:0.92rem;color:var(--muted);margin-bottom:26px;">Venha nos visitar. Todos s&atilde;o bem-vindos.</p>
+    <div class="agenda-grid">
 
-            <section id="ofertas" class="text-center p-10 md:p-16 border-4 border-dashed border-[#19395f] rounded-[40px] bg-gray-50 max-w-4xl mx-auto">
-                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-[#19395f]">Dízimos e Ofertas</h2>
-                <p class="text-2xl mb-10 text-gray-600 italic">"Deus ama ao que dá com alegria"</p>
-                <div class="bg-white p-10 rounded-3xl shadow-2xl border-2 border-gray-100">
-                    <span class="block text-lg font-black text-[#c5a059] mb-4 uppercase tracking-widest">Chave PIX (CNPJ)</span>
-                    <span class="text-2xl md:text-4xl font-mono font-black text-[#19395f] no-break">28.601.953/0001-24</span>
-                    <p class="text-xl mt-6 text-gray-500 font-bold uppercase">Banco Itaú</p>
-                </div>
-            </section>
+      <div class="agenda-card">
+        <div class="agenda-dia">&#9788; Domingo</div>
+        <div class="agenda-item">
+          <span class="agenda-h">09h</span>
+          <span class="agenda-n">Escola B&iacute;blica Dominical</span>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-h">10h</span>
+          <span class="agenda-n">Culto da Manh&atilde;</span>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-h">19h</span>
+          <span class="agenda-n">Culto de Adora&ccedil;&atilde;o e Prega&ccedil;&atilde;o</span>
+        </div>
+      </div>
 
-            <section id="aniversariantes" class="bg-white border-y-8 md:border-8 border-[#19395f] -mx-6 md:mx-0 p-0 md:p-8 text-center">
-                <h2 class="text-3xl md:text-4xl font-serif font-bold text-[#19395f] py-8 uppercase tracking-widest">Aniversariantes</h2>
-                <div class="calendar-container w-full bg-white">
-                    <iframe src="https://calendar.google.com/calendar/embed?src=d524be653ddda530e5102dc37500585d123c519f01195a52f1ad5794163dd2a2%40group.calendar.google.com&ctz=America%2FSao_Paulo&hl=pt_BR&mode=AGENDA&showNav=0&showPrint=0&showTabs=0&showCalendars=0" style="border: 0" frameborder="0" scrolling="no"></iframe>
-                </div>
-            </section>
+      <div class="agenda-card">
+        <div class="agenda-dia">&#9684; Quarta-feira</div>
+        <div class="agenda-item">
+          <span class="agenda-h">19h</span>
+          <span class="agenda-n">Reuni&atilde;o de Ora&ccedil;&atilde;o e Estudo B&iacute;blico</span>
+        </div>
+      </div>
 
-            <section id="social" class="pb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center text-[#19395f]">Nossas Redes</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <a href="https://www.instagram.com/sibnovafriburgo" target="_blank" class="big-social-btn secondary shadow-xl">
-                        <i data-lucide="instagram" class="w-10 h-10"></i>
-                        <div><strong class="text-2xl block">Instagram</strong><small class="text-lg">@sibnovafriburgo</small></div>
-                    </a>
-                    <a href="https://www.facebook.com/sibnf" target="_blank" class="big-social-btn primary shadow-xl">
-                        <i data-lucide="facebook" class="w-10 h-10"></i>
-                        <div><strong class="text-2xl block">Facebook</strong><small class="text-lg opacity-80">facebook.com/sibnf</small></div>
-                    </a>
-                    <a href="https://www.youtube.com/@sibnftv" target="_blank" class="big-social-btn primary shadow-xl">
-                        <i data-lucide="youtube" class="w-10 h-10"></i>
-                        <div><strong class="text-2xl block">YouTube</strong><small class="text-lg opacity-80">Cultos ao vivo</small></div>
-                    </a>
-                    <a href="https://wa.me/5522981633108" target="_blank" class="big-social-btn secondary border-[#25D366] text-[#1da851] shadow-xl">
-                        <i data-lucide="message-circle" class="w-10 h-10"></i>
-                        <div><strong class="text-2xl block">WhatsApp</strong><small class="text-lg">Secretaria</small></div>
-                    </a>
-                </div>
-            </section>
-        </div>
+      <div class="agenda-card">
+        <div class="agenda-dia">&#10022; Sexta-feira</div>
+        <div class="agenda-item">
+          <span class="agenda-h">19h</span>
+          <span class="agenda-n">Embaixadores do Rei</span>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-h">19h</span>
+          <span class="agenda-n">Mensageiras do Rei</span>
+        </div>
+      </div>
 
-        <footer class="bg-[#19395f] text-white py-16 text-center border-t-[12px] border-[#c5a059]">
-            <p class="font-bold px-6 text-2xl md:text-3xl mb-4">Rua Pres. Vargas, 60 - Olaria</p>
-            <p class="text-xl md:text-2xl opacity-80 mb-8">Nova Friburgo - RJ</p>
-            <div class="h-2 w-32 bg-[#c5a059] mx-auto mb-8"></div>
-            <p class="text-lg opacity-50 uppercase tracking-widest font-bold">Desde 1947 servindo ao Senhor</p>
-        </footer>
-    </main>
+    </div>
+  </div>
+</section>
 
-    <script>lucide.createIcons();</script>
+<!-- OFERTAS -->
+<section id="ofertas">
+  <div class="section-inner reveal" style="text-align:center">
+    <span class="of-eye">Contribui&ccedil;&otilde;es</span>
+    <h2 class="of-title">D&iacute;zimos &amp; Ofertas</h2>
+    <div class="of-rule"></div>
+    <p class="of-verse">&ldquo;Deus ama ao que d&aacute; com alegria&rdquo;</p>
+    <div class="of-box">
+      <span class="of-label">Chave PIX &mdash; CNPJ</span>
+      <span class="of-cnpj">28.601.953/0001-24</span>
+      <span class="of-bank">Segunda Igreja Batista de Nova Friburgo &middot; Banco Ita&uacute;</span>
+      <button class="of-copy" id="copyBtn">&#128203; Copiar CNPJ</button>
+    </div>
+  </div>
+</section>
+
+<!-- REDES SOCIAIS -->
+<section class="section" id="social">
+  <div class="section-inner reveal">
+    <span class="s-eye">Redes Sociais &amp; Minist&eacute;rios</span>
+    <h2 class="s-title">Acompanhe-nos</h2>
+    <div class="s-rule"></div>
+    <div class="soc-groups">
+
+      <!-- Instagram -->
+      <div>
+        <div class="soc-group-label">Instagram</div>
+        <div class="soc-list">
+          <a href="https://instagram.com/sibnovafriburgo" target="_blank" rel="noopener" class="soc-link">
+            <svg class="soc-icon" viewBox="0 0 24 24" fill="none" stroke="#c8892a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="#c8892a"/>
+            </svg>
+            <div class="soc-info">
+              <span class="soc-name">Igreja Geral</span>
+              <span class="soc-handle">@sibnovafriburgo</span>
+            </div>
+            <span class="soc-arr">&#8594;</span>
+          </a>
+          <a href="https://instagram.com/embaixada_pr.joaojoses.filho" target="_blank" rel="noopener" class="soc-link">
+            <svg class="soc-icon" viewBox="0 0 24 24" fill="none" stroke="#c8892a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="#c8892a"/>
+            </svg>
+            <div class="soc-info">
+              <span class="soc-name">Embaixadores do Rei</span>
+              <span class="soc-handle">@embaixada_pr.joaojoses.filho</span>
+            </div>
+            <span class="soc-arr">&#8594;</span>
+          </a>
+          <a href="https://instagram.com/mensageirasdorei_sibnf" target="_blank" rel="noopener" class="soc-link">
+            <svg class="soc-icon" viewBox="0 0 24 24" fill="none" stroke="#c8892a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="#c8892a"/>
+            </svg>
+            <div class="soc-info">
+              <span class="soc-name">Mensageiras do Rei</span>
+              <span class="soc-handle">@mensageirasdorei_sibnf</span>
+            </div>
+            <span class="soc-arr">&#8594;</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Outras -->
+      <div>
+        <div class="soc-group-label">Outras Redes</div>
+        <div class="soc-list">
+          <a href="https://youtube.com/@sibnftv" target="_blank" rel="noopener" class="soc-link yt">
+            <svg class="soc-icon" viewBox="0 0 24 24" fill="none" stroke="#c0392b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/>
+              <polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#c0392b" stroke="none"/>
+            </svg>
+            <div class="soc-info">
+              <span class="soc-name">YouTube &mdash; Cultos ao Vivo</span>
+              <span class="soc-handle">@sibnftv</span>
+            </div>
+            <span class="soc-arr">&#8594;</span>
+          </a>
+          <a href="https://facebook.com/sibnf" target="_blank" rel="noopener" class="soc-link fb">
+            <svg class="soc-icon" viewBox="0 0 24 24" fill="none" stroke="#2d5fa8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+            </svg>
+            <div class="soc-info">
+              <span class="soc-name">Facebook</span>
+              <span class="soc-handle">facebook.com/sibnf</span>
+            </div>
+            <span class="soc-arr">&#8594;</span>
+          </a>
+          <a href="https://wa.me/5522981633108" target="_blank" rel="noopener" class="soc-link wa">
+            <svg class="soc-icon" viewBox="0 0 24 24" fill="#25d366">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+            </svg>
+            <div class="soc-info">
+              <span class="soc-name">WhatsApp &mdash; Secretaria</span>
+              <span class="soc-handle">(22) 98163-3108</span>
+            </div>
+            <span class="soc-arr">&#8594;</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ANIVERSARIANTES -->
+<section class="section" id="aniversariantes" style="background:var(--white)">
+  <div class="section-inner reveal">
+    <span class="s-eye">Celebra&ccedil;&atilde;o</span>
+    <h2 class="s-title">&#127874; Aniversariantes do M&ecirc;s</h2>
+    <div class="s-rule"></div>
+    <div class="cal-wrap">
+      <iframe src="https://calendar.google.com/calendar/embed?src=d524be653ddda530e5102dc37500585d123c519f01195a52f1ad5794163dd2a2%40group.calendar.google.com&amp;ctz=America%2FSao_Paulo&amp;hl=pt_BR&amp;mode=AGENDA&amp;showNav=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0" title="Calend&aacute;rio de aniversariantes"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="ft-church">Segunda Igreja Batista<br />de Nova Friburgo</div>
+      <p class="ft-text">Pregando o evangelho de Cristo em Nova Friburgo desde 1947.</p>
+    </div>
+    <div>
+      <div class="ft-label">Endere&ccedil;o</div>
+      <p class="ft-text">
+        Rua Pres. Vargas, 60<br />
+        Olaria, Nova Friburgo &mdash; RJ<br /><br />
+        <a href="https://wa.me/5522981633108">(22) 98163-3108</a>
+      </p>
+    </div>
+    <div>
+      <div class="ft-label">Hor&aacute;rios</div>
+      <p class="ft-text">
+        Dom &mdash; 09h &middot; 10h &middot; 19h<br />
+        Qua &mdash; 19h<br />
+        Sex &mdash; 19h
+      </p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>SIBNF &copy; Desde 1947</span>
+    <span>Nova Friburgo &middot; RJ &middot; Brasil</span>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu
+  document.getElementById('hamBtn').addEventListener('click', function() {
+    document.getElementById('mob-menu').classList.toggle('open');
+  });
+  document.querySelectorAll('#mob-menu a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      document.getElementById('mob-menu').classList.remove('open');
+    });
+  });
+
+  // Copy CNPJ
+  document.getElementById('copyBtn').addEventListener('click', function() {
+    var btn = this;
+    navigator.clipboard.writeText('28601953000124').then(function() {
+      btn.textContent = '\u2713 Copiado!';
+      setTimeout(function() { btn.textContent = '\uD83D\uDCCB Copiar CNPJ'; }, 2500);
+    });
+  });
+
+  // Scroll reveal
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.07 });
+  document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
+</script>
 </body>
 </html>
